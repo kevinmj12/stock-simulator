@@ -5,7 +5,7 @@ export const state = {};
 
 export const ThemeContext = createContext(state);
 
-export const StockSimulatorProvider = ({
+export const StockSimulatorThemeProvider = ({
   children,
 }: {
   children: ReactNode;

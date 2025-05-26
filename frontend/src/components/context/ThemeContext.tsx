@@ -1,5 +1,7 @@
 import { GlobalStyle } from "@/style/global";
+import { theme } from "@/style/theme";
 import { createContext, ReactNode } from "react";
+import { ThemeProvider } from "styled-components";
 
 export const state = {};
 
@@ -12,8 +14,10 @@ export const StockSimulatorThemeProvider = ({
 }) => {
   return (
     <>
-      <GlobalStyle />
-      {children}
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        {children}
+      </ThemeProvider>
     </>
   );
 };

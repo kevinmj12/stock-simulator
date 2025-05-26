@@ -1,8 +1,13 @@
 import { RouterProvider } from "react-router-dom";
-import Router from "./Router";
+import { StockSimulatorThemeProvider } from "./components/context/ThemeContext";
+import Router from "@/Router";
 
 function App() {
-  return <RouterProvider router={Router} />;
+  return (
+    <StockSimulatorThemeProvider>
+      <RouterProvider router={Router} />
+    </StockSimulatorThemeProvider>
+  );
 }
 
 export default App;

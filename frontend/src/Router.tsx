@@ -5,6 +5,8 @@ import Stock from "./pages/Stock";
 import Assets from "./pages/Assets";
 import Transactions from "./pages/Transactions";
 import Layout from "./components/layout/Layout";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 const routeList = [
   {
@@ -22,6 +24,14 @@ const routeList = [
   {
     path: "/transactions",
     element: <Transactions />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
   },
 ];
 

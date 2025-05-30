@@ -72,7 +72,11 @@ exports.updateCash = async (req, res) => {
       await db.query('UPDATE assets SET cash = cash + ? WHERE user_id = ?', [cash, user_id]);
     }
 
-    res.status(200).json({ message: '자산 업데이트 완료' });
+  const [rows] = await db.query('SELECT cash FROM assets WHERE user_id = ?', [user_id]);
+  const currentCash = rows.length > 0 ? rows[0].cash : 0;
+
+
+    res.status(200).json({ message: '캐쉬 추가 완료' , cash: currentCash });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: '서버 오류' });

@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const assetController = require('../controllers/assetController');
 
-router.put('/me', assetController.addAsset);
-router.get('/me', assetController.getTotalAsset);
+router.put('/me', assetController.updateCash);
+router.get('/me', assetController.getMyAssets);
 
 
 

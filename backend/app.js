@@ -2,12 +2,16 @@ const express = require('express');
 const app = express();
 const stockRoutes = require('./routes/stocks');
 const transactionRoutes = require('./routes/transactions');
+const assetRoutes = require('./routes/assets');
+
 
 require('./cron/priceUpdater'); // 6시간마다 가격 갱신
+require('./cron/dailyUpdater');
 
 app.use(express.json());
 app.use('/stocks', stockRoutes);
 app.use('/transactions', transactionRoutes);
+app.use('/assets' , assetRoutes)
 
 
 

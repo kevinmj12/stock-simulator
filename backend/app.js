@@ -3,7 +3,7 @@ const app = express();
 const stockRoutes = require('./routes/stocks');
 const transactionRoutes = require('./routes/transactions');
 const assetRoutes = require('./routes/assets');
-
+const userRoutes = require('./routes/users'); // ✅ 추가
 
 require('./cron/priceUpdater'); // 6시간마다 가격 갱신
 require('./cron/dailyUpdater');
@@ -12,7 +12,7 @@ app.use(express.json());
 app.use('/stocks', stockRoutes);
 app.use('/transactions', transactionRoutes);
 app.use('/assets' , assetRoutes)
-
+app.use('/users', userRoutes); // ✅ 여기만 수정!
 
 
 

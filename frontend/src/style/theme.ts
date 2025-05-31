@@ -3,6 +3,7 @@ export type ColorKey =
   | "secondary"
   | "background"
   | "text"
+  | "subtext"
   | "border"
   | "rise"
   | "fall";
@@ -19,6 +20,7 @@ export const theme: ITheme = {
     secondary: "#6B7787",
     background: "#FFFFFF",
     text: "#000000",
+    subtext: "#717171",
     border: "#E0E0E0",
     rise: "#F04452",
     fall: "#3182F6",

@@ -1,5 +1,5 @@
-import { testApple } from "@/store/stockTestObject";
-import { parseStockData } from "@/util/stock/parseStockData";
+import { dailyApple } from "@/store/stockTestObject";
+import { PriceData } from "@/util/stock/parseStockData";
 import React, { useEffect, useRef } from "react";
 import {
   LineChart,
@@ -24,12 +24,14 @@ const createMonthTickFormatter = (): ((tick: string) => string) => {
   };
 };
 
-export const RenderLineChart: React.FC = () => {
+type RenderLineChartProps = {
+  data: PriceData[];
+};
+
+export const RenderLineChart: React.FC<RenderLineChartProps> = ({ data }) => {
   const tickFormatter = createMonthTickFormatter();
 
-  // Todo: rawData 실제 받아온 데이터로 변경
-  const rawData = parseStockData(testApple);
-  const prices = rawData.map((d) => d.price);
+  const prices = data.map((d) => d.price);
   const minPrice = Math.min(...prices);
   const maxPrice = Math.max(...prices);
 
@@ -69,9 +71,9 @@ export const RenderLineChart: React.FC = () => {
         style={{ overflowX: "auto", width: "600px" }}
       >
         <LineChart
-          width={Math.max(rawData.length * 30)}
+          width={Math.max(data.length * 30)}
           height={300}
-          data={rawData}
+          data={data}
           margin={{ top: 5, right: 10, bottom: 5, left: 20 }}
         >
           <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />

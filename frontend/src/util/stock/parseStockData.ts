@@ -1,4 +1,4 @@
-export type StockData = {
+type DailyStockData = {
   "Meta Data": {
     "1. Information": string;
     "2. Symbol": string;
@@ -11,7 +11,21 @@ export type StockData = {
   };
 };
 
-export type TimeSeriesEntry = {
+type IntradayStockData = {
+  "Meta Data": {
+    "1. Information": string;
+    "2. Symbol": string;
+    "3. Last Refreshed": string;
+    "4. Interval": string;
+    "5. Output Size": string;
+    "6. Time Zone": string;
+  };
+  "Time Series (60min)": {
+    [date: string]: TimeSeriesEntry;
+  };
+};
+
+type TimeSeriesEntry = {
   "1. open": string;
   "2. high": string;
   "3. low": string;
@@ -19,12 +33,32 @@ export type TimeSeriesEntry = {
   "5. volume": string;
 };
 
-export const parseStockData = (data: StockData) => {
+export type PriceData = {
+  name: string;
+  price: number;
+};
+
+export const parseDailyStockData = (data: DailyStockData) => {
   const timeSeries = data["Time Series (Daily)"];
-  let rtnData = Object.entries(timeSeries).map(([date, values]) => ({
-    name: date,
-    price: parseFloat(values["4. close"]),
-  }));
+  let rtnData: PriceData[] = Object.entries(timeSeries).map(
+    ([date, values]) => ({
+      name: date,
+      price: parseFloat(values["4. close"]),
+    })
+  );
+  rtnData = rtnData.reverse();
+
+  return rtnData;
+};
+
+export const parseIntradayStockData = (data: IntradayStockData) => {
+  const timeSeries = data["Time Series (60min)"];
+  let rtnData: PriceData[] = Object.entries(timeSeries).map(
+    ([date, values]) => ({
+      name: date,
+      price: parseFloat(values["4. close"]),
+    })
+  );
   rtnData = rtnData.reverse();
 
   return rtnData;

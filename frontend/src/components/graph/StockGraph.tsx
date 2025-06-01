@@ -69,7 +69,7 @@ export const RenderLineChart: React.FC = () => {
         style={{ overflowX: "auto", width: "600px" }}
       >
         <LineChart
-          width={Math.max(rawData.length * 40)}
+          width={Math.max(rawData.length * 30)}
           height={300}
           data={rawData}
           margin={{ top: 5, right: 10, bottom: 5, left: 20 }}

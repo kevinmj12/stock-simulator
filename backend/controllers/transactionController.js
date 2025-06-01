@@ -1,22 +1,22 @@
 const db = require('../db');
 
-const USER_ID = 1; // 테스트용
+
 
 exports.buyStock = async (req, res) => {
-    const user_id = 1; // 테스트용
-    const { stock_id, quantity } = req.body;
+  const user_id = req.user.id;
+  const { stock_id, quantity } = req.body;
   
-    if (!stock_id || !quantity || isNaN(stock_id) || isNaN(quantity)) {
-      return res.status(400).json({ error: 'stock_id와 quantity는 숫자로 필수입니다' });
-    }
+  if (!stock_id || !quantity || isNaN(stock_id) || isNaN(quantity)) {
+    return res.status(400).json({ error: 'stock_id와 quantity는 숫자로 필수입니다' });
+  }
   
-    try {
-      // 최신 주가 가져오기
-      const [priceResult] = await db.query(
-        'SELECT price FROM stock_prices WHERE stock_id = ? ORDER BY fetched_at DESC LIMIT 1',
-        [stock_id]
-      );
-      if (priceResult.length === 0) {
+  try {
+    // 최신 주가 가져오기
+    const [priceResult] = await db.query(
+      'SELECT price FROM stock_prices WHERE stock_id = ? ORDER BY fetched_at DESC LIMIT 1',
+      [stock_id]
+    );
+    if (priceResult.length === 0) {
         return res.status(400).json({ error: '해당 주식의 가격 정보가 없습니다' });
       }
       const price = priceResult[0].price;
@@ -70,7 +70,7 @@ exports.buyStock = async (req, res) => {
   };
 
   exports.sellStock = async (req, res) => {
-    const user_id = 1; // 테스트용
+    const user_id = req.user.id;
     const { stock_id, quantity } = req.body;
   
     if (!stock_id || !quantity || isNaN(stock_id) || isNaN(quantity)) {
@@ -134,7 +134,7 @@ exports.buyStock = async (req, res) => {
   };
   
   exports.getMyTransactions = async (req, res) => {
-    const user_id = 1; // 테스트용
+    const user_id = req.user.id;
   
     try {
       const [transactions] = await db.query(`

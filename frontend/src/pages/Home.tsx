@@ -1,13 +1,22 @@
 import styled from "styled-components";
+import StockListTable from "@/components/stock/StockTableList";
 
 const Home = () => {
   return (
     <HomeStyle>
-      <h1>Home</h1>
+      <StockListTable />
     </HomeStyle>
   );
 };
 
-const HomeStyle = styled.div``;
+const HomeStyle = styled.div`
+  padding: 24px;
+
+  h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+`;
 
 export default Home;

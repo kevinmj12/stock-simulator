@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-// import { stockPrice } from "@/api/stock.api";
 import { useEffect, useState } from "react";
 import { RenderLineChart } from "@/components/graph/StockGraph";
 import { Segmented } from "antd";
@@ -34,7 +33,6 @@ const Stock: React.FC = () => {
 
   const getStockData = () => {
     if (selectedChartType === chartType[0]) {
-      console.log(stockPriceList);
       return stockPriceList[0];
     } else {
       return stockPriceList[1];
@@ -53,7 +51,10 @@ const Stock: React.FC = () => {
           }}
         />
         {stockPriceList[0] && stockPriceList[1] && (
-          <RenderLineChart data={getStockData()} />
+          <RenderLineChart
+            data={getStockData()}
+            selectedChartType={selectedChartType}
+          />
         )}
       </div>
     </StockStyle>

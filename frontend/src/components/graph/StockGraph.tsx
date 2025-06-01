@@ -26,9 +26,13 @@ const createMonthTickFormatter = (): ((tick: string) => string) => {
 
 type RenderLineChartProps = {
   data: PriceData[];
+  selectedChartType: String;
 };
 
-export const RenderLineChart: React.FC<RenderLineChartProps> = ({ data }) => {
+export const RenderLineChart: React.FC<RenderLineChartProps> = ({
+  data,
+  selectedChartType,
+}) => {
   const tickFormatter = createMonthTickFormatter();
 
   const prices = data.map((d) => d.price);
@@ -49,7 +53,7 @@ export const RenderLineChart: React.FC<RenderLineChartProps> = ({ data }) => {
     if (el) {
       el.scrollLeft = el.scrollWidth;
     }
-  }, []);
+  }, [selectedChartType]);
 
   return (
     <div style={{ display: "flex" }}>

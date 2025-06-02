@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { mockStocks } from "../../data/stocks";
+import { useNavigate } from "react-router-dom";
 
 const StockListTable = () => {
+  const navigate = useNavigate();
   return (
     <TableStyle>
       <thead>
@@ -20,7 +22,12 @@ const StockListTable = () => {
           const formattedRate = `${isUp ? "+" : ""}${rate.toFixed(2)}%`;
 
           return (
-            <tr key={stock.id}>
+            <tr
+              key={stock.id}
+              onClick={() => {
+                navigate(`/stock/${stock.name}`);
+              }}
+            >
               <td className="name-cell">
                 <img src={stock.logoUrl} alt={stock.name} />
                 <span>{stock.name}</span>
@@ -59,6 +66,7 @@ const TableStyle = styled.table`
 
   tbody {
     tr {
+      cursor: pointer;
       &:nth-child(odd) {
         background-color: #efefef;
       }

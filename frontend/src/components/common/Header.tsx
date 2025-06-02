@@ -52,7 +52,7 @@ const HeaderStyle = styled.header`
   width: 100%;
   margin: 0 auto;
   display: flex;
-  align-items: end;
+  align-items: start;
   justify-content: space-between;
   padding: 0px;
   .navigation {

@@ -1,4 +1,3 @@
-import { dailyApple } from "@/store/stockTestObject";
 import { PriceData } from "@/util/stock/parseStockData";
 import React, { useEffect, useRef } from "react";
 import {
@@ -115,6 +114,7 @@ export const RenderLineChart: React.FC<RenderLineChartProps> = ({
             dataKey="price"
             stroke="#8884d8"
             activeDot={{ r: 8 }}
+            animationDuration={1000}
           />
         </LineChart>
       </div>

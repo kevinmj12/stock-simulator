@@ -9,8 +9,7 @@ import {
   PriceData,
 } from "@/util/stock/parseStockData";
 import { dailyApple, intradayApple } from "@/store/stockTestObject";
-
-// 차트 종류에 따라 맞는 데이터를 리턴하는 함수
+import { capitalizeFirstLetter } from "@/util/capitalize";
 
 const Stock: React.FC = () => {
   const { stockName } = useParams<{ stockName: string }>();
@@ -41,7 +40,7 @@ const Stock: React.FC = () => {
 
   return (
     <StockStyle>
-      <h1>{stockName}</h1>
+      {stockName && <h1>{capitalizeFirstLetter(stockName)}</h1>}
       <div className="chart">
         <Segmented<string>
           className="segmented"
@@ -65,6 +64,7 @@ const StockStyle = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  margin-top: 30px;
 
   h1 {
     margin-left: 20px;

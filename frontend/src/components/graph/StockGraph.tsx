@@ -24,6 +24,23 @@ const createMonthTickFormatter = (): ((tick: string) => string) => {
   };
 };
 
+const createDayTickFormatter = (): ((tick: string) => string) => {
+  let lastDay: number | null = null;
+  return (tick: string) => {
+    const date = new Date(tick);
+    let month = (date.getMonth() + 1).toString();
+    if (month.length === 1) {
+      month = "0" + month;
+    }
+    const day = date.getDate(); // 1 ~ 31
+    if (day !== lastDay) {
+      lastDay = day;
+      return `${month}-${day}`;
+    }
+    return "";
+  };
+};
+
 type RenderLineChartProps = {
   data: PriceData[];
   selectedChartType: String;
@@ -33,7 +50,10 @@ export const RenderLineChart: React.FC<RenderLineChartProps> = ({
   data,
   selectedChartType,
 }) => {
-  const tickFormatter = createMonthTickFormatter();
+  const tickFormatter =
+    selectedChartType === "일"
+      ? createMonthTickFormatter()
+      : createDayTickFormatter();
 
   const prices = data.map((d) => d.price);
   const minPrice = Math.min(...prices);

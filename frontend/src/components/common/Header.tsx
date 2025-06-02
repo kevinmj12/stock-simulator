@@ -54,7 +54,7 @@ const HeaderStyle = styled.header`
   display: flex;
   align-items: end;
   justify-content: space-between;
-  padding: 0px;
+  padding: 0px 20px;
   .navigation {
     margin: 0;
     justify-self: center;

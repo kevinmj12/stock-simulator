@@ -3,10 +3,10 @@ import Home from "./pages/Home";
 import Error from "./pages/Error";
 import Stock from "./pages/Stock";
 import Assets from "./pages/Assets";
-import Transactions from "./pages/Transactions";
 import Layout from "./components/layout/Layout";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Transactions from "./pages/Transactions";
 
 const routeList = [
   {

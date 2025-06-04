@@ -18,7 +18,7 @@ export const theme: ITheme = {
   color: {
     primary: "#333D4B",
     secondary: "#6B7787",
-    background: "#FFFFFF",
+    background: "#E7E7E7",
     text: "#000000",
     subtext: "#717171",
     border: "#E1E1E1",

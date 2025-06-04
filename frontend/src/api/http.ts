@@ -32,7 +32,7 @@ export const createClient = (config?: AxiosRequestConfig) => {
 
 export const httpClient = createClient();
 
-type RequestMethod = "get" | "post" | "put" | "delete";
+export type RequestMethod = "get" | "post" | "put" | "delete";
 
 export const requestHandler = async (
   method: RequestMethod,

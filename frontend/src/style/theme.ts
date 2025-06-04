@@ -6,7 +6,8 @@ export type ColorKey =
   | "subtext"
   | "border"
   | "rise"
-  | "fall";
+  | "fall"
+  | "hover";
 
 interface ITheme {
   color: {
@@ -24,6 +25,7 @@ export const theme: ITheme = {
     border: "#E0E0E0",
     rise: "#F04452",
     fall: "#3182F6",
+    hover : "#F3F3F3"
   },
 };
 

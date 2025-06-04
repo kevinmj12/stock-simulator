@@ -30,6 +30,7 @@ const StockBuyingSelling = () => {
         options={tradeType}
         onChange={(value) => {
           setSelected(value);
+          setStockAmount(0);
         }}
         block
       />

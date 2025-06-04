@@ -88,10 +88,6 @@ const StockStyle = styled.div`
   }
 
   .chart {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-
     .segmented {
       width: fit-content;
 
@@ -102,6 +98,7 @@ const StockStyle = styled.div`
     }
   }
 
+  .chart,
   .trade {
     display: flex;
     flex-direction: column;

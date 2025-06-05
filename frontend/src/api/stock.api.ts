@@ -1,5 +1,28 @@
 import axios from "axios";
+import { requestHandler } from "./http";
 
+export interface StockDetailProps {
+  id: number;
+}
+
+export interface StockTradeProps {
+  stock_id: number;
+  quantity: number;
+}
+
+export const getStockDetail = (data: StockDetailProps) => {
+  return requestHandler("get", `/stocks/${data.id}`);
+};
+
+export const buying = (data: StockTradeProps) => {
+  return requestHandler("post", "/transactions/buy", data);
+};
+
+export const selling = (data: StockTradeProps) => {
+  return requestHandler("post", "/transactions/sell", data);
+};
+
+// Alpha Vantage에 직접 요청하는 api(사용 안함)
 type StockTime = "hour" | "day" | "week" | "month";
 enum StockTimeUrl {
   hour = "TIME_SERIES_INTRADAY",

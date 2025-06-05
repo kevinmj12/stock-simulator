@@ -11,9 +11,12 @@ import {
 } from "@/util/stock/parseStockData";
 import { dailyApple, intradayApple } from "@/store/stockTestObject";
 import { capitalizeFirstLetter } from "@/util/capitalize";
+import { IStockDetail } from "@/models/stock/stock-detail";
+import { getStockDetail, StockDetailProps } from "@/api/stock.api";
 
 const Stock: React.FC = () => {
-  const { stockName } = useParams<{ stockName: string }>();
+  const { stockId } = useParams<{ stockId: string }>();
+  const stockIdNum = Number(stockId);
 
   const chartType: string[] = ["일", "실시간"];
   const [selectedChartType, setSelectedChartType] = useState<string>(
@@ -21,13 +24,21 @@ const Stock: React.FC = () => {
   );
 
   const [stockPriceList, setStockPriceList] = useState<PriceData[][]>([]);
+  const [stockDetail, setStockDetail] = useState<IStockDetail | null>(null);
 
   useEffect(() => {
+    const fetchStockDetail = async () => {
+      const stockDetailProps: StockDetailProps = {
+        id: stockIdNum,
+      };
+      setStockDetail(await getStockDetail(stockDetailProps));
+    };
     const fetchStockPrice = async () => {
       const dailyPrice: PriceData[] = parseDailyStockData(dailyApple);
       const intradayPrice: PriceData[] = parseIntradayStockData(intradayApple);
       setStockPriceList([dailyPrice, intradayPrice]);
     };
+    fetchStockDetail();
     fetchStockPrice();
   }, []);
 
@@ -39,9 +50,29 @@ const Stock: React.FC = () => {
     }
   };
 
+  if (!stockDetail) {
+    return null;
+  }
+
   return (
     <StockStyle>
-      {stockName && <h1>{capitalizeFirstLetter(stockName)}</h1>}
+      <div className="stock-info-container">
+        <img
+          className="stock-info-image"
+          src={stockDetail.logo_url}
+          alt={stockDetail.company_name}
+          width="60px"
+          height="60px"
+        ></img>
+        <div className="stock-info-name-price">
+          <div className="stock-info-name">
+            <span>{capitalizeFirstLetter(stockDetail.company_name)}</span>
+            <span className="symbol">{stockDetail.symbol}</span>
+          </div>
+          <div className="stock-info-price">${stockDetail.price}</div>
+        </div>
+      </div>
+
       <div className="container">
         <div className="chart">
           <div className="stock-subtitle">차트</div>
@@ -61,7 +92,7 @@ const Stock: React.FC = () => {
         </div>
         <div className="trade">
           <div className="stock-subtitle">매매</div>
-          <StockBuyingSelling />
+          <StockBuyingSelling curPrice={stockDetail.price} />
         </div>
       </div>
     </StockStyle>
@@ -74,8 +105,31 @@ const StockStyle = styled.div`
   gap: 16px;
   margin-top: 30px;
 
-  h1 {
+  .stock-info-container {
+    display: flex;
+    align-items: center;
     margin-bottom: 20px;
+    gap: 15px;
+    .stock-info-image {
+      border-radius: 10px;
+    }
+    .stock-info-name-price {
+      display: flex;
+      flex-direction: column;
+      .stock-info-name {
+        display: flex;
+        gap: 10px;
+        font-size: 21px;
+        font-weight: 600;
+        .symbol {
+          color: ${({ theme }) => theme.color.secondary};
+        }
+      }
+      .stock-info-price {
+        font-size: 25px;
+        font-weight: 700;
+      }
+    }
   }
 
   .container {
@@ -84,6 +138,7 @@ const StockStyle = styled.div`
   }
 
   .stock-subtitle {
+    font-size: 20px;
     font-weight: 600;
   }
 

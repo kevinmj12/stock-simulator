@@ -3,7 +3,11 @@ import { Button, Segmented } from "antd";
 import { useState } from "react";
 import { useTheme } from "styled-components";
 
-const StockBuyingSelling = () => {
+interface StockBuyingSellingProps {
+  curPrice: string;
+}
+
+const StockBuyingSelling = ({ curPrice }: StockBuyingSellingProps) => {
   const tradeType: string[] = ["매수", "매도"];
   const tradeButton: string[] = ["구매하기", "판매하기"];
   const [selected, setSelected] = useState<string>("매수");
@@ -36,7 +40,7 @@ const StockBuyingSelling = () => {
       />
       <div className="price">
         <div className="trade-subtitle">구매 가격</div>
-        <div className="box">$60</div>
+        <div className="box">${curPrice}</div>
       </div>
       <div className="amount">
         <div className="trade-subtitle">수량</div>

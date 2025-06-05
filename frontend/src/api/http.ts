@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { getToken, removeToken } from "@/store/authStore";
 
-const BASE_URL = process.env.PORT_NUMBER;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const DEFAULT_TIMEOUT = 30000;
 
 export const createClient = (config?: AxiosRequestConfig) => {

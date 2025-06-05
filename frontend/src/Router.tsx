@@ -14,7 +14,7 @@ const routeList = [
     element: <Home />,
   },
   {
-    path: "/stock/:stockName",
+    path: "/stock/:stockId",
     element: <Stock />,
   },
   {

@@ -75,13 +75,13 @@ export const RenderLineChart: React.FC<RenderLineChartProps> = ({
   }, [selectedChartType]);
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", marginLeft: "-20px" }}>
       {/* y축만 렌더링 */}
       <div style={{}}>
         <LineChart
           width={61}
           height={300}
-          margin={{ top: 5, right: 0, bottom: 5, left: 0 }}
+          margin={{ top: 0, right: 0, bottom: 5, left: 0 }}
         >
           <XAxis width={30} />
           <YAxis domain={domain} />
@@ -97,7 +97,7 @@ export const RenderLineChart: React.FC<RenderLineChartProps> = ({
           width={Math.max(data.length * 30)}
           height={300}
           data={data}
-          margin={{ top: 5, right: 10, bottom: 5, left: 20 }}
+          margin={{ top: 0, right: 10, bottom: 5, left: 20 }}
         >
           <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
           <XAxis

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
+import StockBuyingSelling from "@/components/stock/StockBuyingSelling";
 import { useEffect, useState } from "react";
 import { RenderLineChart } from "@/components/graph/StockGraph";
 import { Segmented } from "antd";
@@ -41,20 +42,27 @@ const Stock: React.FC = () => {
   return (
     <StockStyle>
       {stockName && <h1>{capitalizeFirstLetter(stockName)}</h1>}
-      <div className="chart">
-        <Segmented<string>
-          className="segmented"
-          options={chartType}
-          onChange={(value) => {
-            setSelectedChartType(value);
-          }}
-        />
-        {stockPriceList[0] && stockPriceList[1] && (
-          <RenderLineChart
-            data={getStockData()}
-            selectedChartType={selectedChartType}
+      <div className="container">
+        <div className="chart">
+          <div className="stock-subtitle">차트</div>
+          <Segmented<string>
+            className="segmented"
+            options={chartType}
+            onChange={(value) => {
+              setSelectedChartType(value);
+            }}
           />
-        )}
+          {stockPriceList[0] && stockPriceList[1] && (
+            <RenderLineChart
+              data={getStockData()}
+              selectedChartType={selectedChartType}
+            />
+          )}
+        </div>
+        <div className="trade">
+          <div className="stock-subtitle">매매</div>
+          <StockBuyingSelling />
+        </div>
       </div>
     </StockStyle>
   );
@@ -67,18 +75,34 @@ const StockStyle = styled.div`
   margin-top: 30px;
 
   h1 {
-    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+
+  .container {
+    display: flex;
+    gap: 50px;
+  }
+
+  .stock-subtitle {
+    font-weight: 600;
   }
 
   .chart {
+    .segmented {
+      width: fit-content;
+
+      .ant-segmented-item-selected {
+        font-weight: 500;
+        align-items: center;
+      }
+    }
+  }
+
+  .chart,
+  .trade {
     display: flex;
     flex-direction: column;
     gap: 16px;
-
-    .segmented {
-      width: fit-content;
-      margin-left: 20px;
-    }
   }
 `;
 

@@ -9,7 +9,7 @@ export const useAuth = () => {
   const { showAlert } = useAlert();
   const navigate = useNavigate();
 
-  const { storeLogin } = useAuthStore();
+  const { storeLogin, storeLogout } = useAuthStore();
 
   const userLogin = async (data: LoginProps) => {
     try {
@@ -19,6 +19,16 @@ export const useAuth = () => {
       navigate("/");
     } catch (error) {
       showAlert("로그인이 실패했습니다.");
+    }
+  };
+
+  const userLogout = async () => {
+    try {
+      storeLogout();
+      showAlert("로그아웃이 완료되었습니다.");
+      navigate("/");
+    } catch (error) {
+      showAlert("로그아웃에 실패하였습니다.");
     }
   };
 
@@ -34,6 +44,7 @@ export const useAuth = () => {
 
   return {
     userLogin,
+    userLogout,
     userSignup,
   };
 };

@@ -12,9 +12,9 @@ export interface SignupProps {
 }
 
 export const login = (data: LoginProps) => {
-  return requestHandler("post", "/auth/login", data);
+  return requestHandler("post", "/users/login", data);
 };
 
 export const signup = (data: SignupProps) => {
-  return requestHandler("post", "/auth/signup", data);
+  return requestHandler("post", "/users/signup", data);
 };

@@ -21,7 +21,7 @@ export const theme: ITheme = {
     secondary: "#6B7787",
     background: "#E7E7E7",
     text: "#000000",
-    subtext: "#717171",
+    subtext: "#525a66",
     border: "#E1E1E1",
     rise: "#F04452",
     fall: "#3182F6",

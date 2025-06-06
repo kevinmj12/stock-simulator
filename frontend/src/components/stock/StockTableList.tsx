@@ -1,9 +1,20 @@
 import styled from "styled-components";
-import { mockStocks } from "../../data/stocks";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getStocks } from "@/api/stock.api";
+import { TStock } from "@/models/stock/stock";
 
 const StockListTable = () => {
   const navigate = useNavigate();
+  const [stockList, setStockList] = useState<TStock[]>([]);
+
+  useEffect(() => {
+    const fetchStockList = async () => {
+      setStockList(await getStocks());
+    };
+    fetchStockList();
+  }, []);
+
   return (
     <TableStyle>
       <thead>
@@ -14,25 +25,25 @@ const StockListTable = () => {
         </tr>
       </thead>
       <tbody>
-        {mockStocks.map((stock) => {
-          const rate =
-            ((stock.currentPrice - stock.previousClose) / stock.previousClose) *
-            100;
-          const isUp = rate >= 0;
-          const formattedRate = `${isUp ? "+" : ""}${rate.toFixed(2)}%`;
+        {stockList.map((stock) => {
+          const isUp = parseFloat(stock.change_rate) >= 0;
+          const formattedRate = `${isUp ? "+" : "-"}${stock.change_rate}%`;
 
           return (
             <tr
               key={stock.id}
               onClick={() => {
-                navigate(`/stock/${stock.name}`);
+                navigate(`/stock/${stock.id}`);
               }}
             >
               <td className="name-cell">
-                <img src={stock.logoUrl} alt={stock.name} />
-                <span>{stock.name}</span>
+                <img
+                  src="https://logo.clearbit.com/tesla.com"
+                  alt={stock.company_name}
+                />
+                <span>{stock.company_name}</span>
               </td>
-              <td>${stock.currentPrice.toFixed(2)}</td>
+              <td>${stock.current_price}</td>
               <td className={isUp ? "rise" : "fall"}>{formattedRate}</td>
             </tr>
           );

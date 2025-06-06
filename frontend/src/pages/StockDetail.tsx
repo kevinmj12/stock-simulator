@@ -2,19 +2,15 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import StockBuyingSelling from "@/components/stock/StockBuyingSelling";
 import { useEffect, useState } from "react";
-import { RenderLineChart } from "@/components/graph/StockGraph";
+import { RenderLineChart } from "@/components/stock/StockGraph";
 import { Segmented } from "antd";
-import {
-  parseDailyStockData,
-  parseIntradayStockData,
-  PriceData,
-} from "@/util/stock/parseStockData";
-import { dailyApple, intradayApple } from "@/store/stockTestObject";
 import { capitalizeFirstLetter } from "@/util/capitalize";
 import { IStockDetail } from "@/models/stock/stock-detail";
 import { getStockDetail, StockDetailProps } from "@/api/stock.api";
+import { IPriceData } from "@/models/stock/stock-price";
+import { parseStockPrices } from "@/util/stock/parseStockData";
 
-const Stock: React.FC = () => {
+const StockDetail: React.FC = () => {
   const { stockId } = useParams<{ stockId: string }>();
   const stockIdNum = Number(stockId);
 
@@ -23,23 +19,20 @@ const Stock: React.FC = () => {
     chartType[0]
   );
 
-  const [stockPriceList, setStockPriceList] = useState<PriceData[][]>([]);
   const [stockDetail, setStockDetail] = useState<IStockDetail | null>(null);
+  const [stockPriceList, setStockPriceList] = useState<IPriceData[][]>([]);
 
   useEffect(() => {
     const fetchStockDetail = async () => {
       const stockDetailProps: StockDetailProps = {
         id: stockIdNum,
       };
-      setStockDetail(await getStockDetail(stockDetailProps));
+      const stockDetail = await getStockDetail(stockDetailProps);
+      setStockDetail(stockDetail);
+      setStockPriceList(parseStockPrices(stockDetail));
     };
-    const fetchStockPrice = async () => {
-      const dailyPrice: PriceData[] = parseDailyStockData(dailyApple);
-      const intradayPrice: PriceData[] = parseIntradayStockData(intradayApple);
-      setStockPriceList([dailyPrice, intradayPrice]);
-    };
+
     fetchStockDetail();
-    fetchStockPrice();
   }, []);
 
   const getStockData = () => {
@@ -69,7 +62,7 @@ const Stock: React.FC = () => {
             <span>{capitalizeFirstLetter(stockDetail.company_name)}</span>
             <span className="symbol">{stockDetail.symbol}</span>
           </div>
-          <div className="stock-info-price">${stockDetail.price}</div>
+          <div className="stock-info-price">${stockDetail.current_price}</div>
         </div>
       </div>
 
@@ -92,7 +85,7 @@ const Stock: React.FC = () => {
         </div>
         <div className="trade">
           <div className="stock-subtitle">매매</div>
-          <StockBuyingSelling curPrice={stockDetail.price} />
+          <StockBuyingSelling curPrice={stockDetail.current_price} />
         </div>
       </div>
     </StockStyle>
@@ -143,6 +136,7 @@ const StockStyle = styled.div`
   }
 
   .chart {
+    width: 600px;
     .segmented {
       width: fit-content;
 
@@ -161,4 +155,4 @@ const StockStyle = styled.div`
   }
 `;
 
-export default Stock;
+export default StockDetail;

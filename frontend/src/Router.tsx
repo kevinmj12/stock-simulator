@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import Error from "./pages/Error";
-import Stock from "./pages/Stock";
 import Assets from "./pages/Assets";
 import Layout from "./components/layout/Layout";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Transactions from "./pages/Transactions";
+import StockDetail from "./pages/StockDetail";
 
 const routeList = [
   {
@@ -15,7 +15,7 @@ const routeList = [
   },
   {
     path: "/stock/:stockId",
-    element: <Stock />,
+    element: <StockDetail />,
   },
   {
     path: "/assets",

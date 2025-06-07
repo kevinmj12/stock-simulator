@@ -27,7 +27,7 @@ const StockListTable = () => {
       <tbody>
         {stockList.map((stock) => {
           const isUp = parseFloat(stock.change_rate) >= 0;
-          const formattedRate = `${isUp ? "+" : "-"}${stock.change_rate}%`;
+          const formattedRate = `${isUp ? "+" : ""}${stock.change_rate}%`;
 
           return (
             <tr
@@ -37,10 +37,7 @@ const StockListTable = () => {
               }}
             >
               <td className="name-cell">
-                <img
-                  src="https://logo.clearbit.com/tesla.com"
-                  alt={stock.company_name}
-                />
+                <img src={stock.logo_url} alt={stock.company_name} />
                 <span>{stock.company_name}</span>
               </td>
               <td>${stock.current_price}</td>
@@ -60,7 +57,7 @@ const TableStyle = styled.table`
   thead {
     th {
       text-align: left;
-      padding: 12px 0;
+      padding: 12px;
       font-size: 16px;
       color: ${({ theme }) => theme.color.subtext};
     }
@@ -88,9 +85,13 @@ const TableStyle = styled.table`
     }
 
     td {
-      padding: 12px 0;
+      padding: 12px;
       font-size: 20px;
       color: ${({ theme }) => theme.color.text};
+
+      img {
+        border-radius: 4px;
+      }
     }
 
     td:nth-child(2),

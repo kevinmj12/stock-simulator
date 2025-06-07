@@ -1,10 +1,13 @@
 import { styled } from "styled-components";
 import { FaRegUser, FaSignInAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useAuthStore } from "@/store/authStore";
+import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn } = useAuthStore();
+  const { userLogout } = useAuth();
   return (
     <HeaderStyle>
       <nav className="navigation">
@@ -24,7 +27,7 @@ const Header = () => {
         {isLoggedIn ? (
           <ul>
             <li>
-              <button>로그아웃</button>
+              <button onClick={() => userLogout()}>로그아웃</button>
             </li>
           </ul>
         ) : (

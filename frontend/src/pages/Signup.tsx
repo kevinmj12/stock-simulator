@@ -58,9 +58,11 @@ const Signup = () => {
               <p className="error-text">6자 이상 입력해주세요.</p>
             )}
           </fieldset>
-          <Button type="submit" size="medium" scheme="primary">
-            회원가입
-          </Button>
+          <fieldset>
+            <Button type="submit" size="medium" scheme="primary">
+              회원가입
+            </Button>
+          </fieldset>
         </form>
       </LoginStyle>
     </>

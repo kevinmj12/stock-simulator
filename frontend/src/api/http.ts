@@ -10,10 +10,18 @@ export const createClient = (config?: AxiosRequestConfig) => {
     timeout: DEFAULT_TIMEOUT,
     headers: {
       "Content-Type": "application/json",
-      Authorization: getToken() ? `${getToken()}` : "",
+      Authorization: getToken() ? `Bearer ${getToken()}` : "",
     },
     withCredentials: true,
     ...config,
+  });
+
+  axiosInstance.interceptors.request.use((config) => {
+    const token = getToken();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
   });
 
   axiosInstance.interceptors.response.use(

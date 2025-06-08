@@ -1,14 +1,25 @@
 import AssetList from "@/components/asset/AssetList";
 import AssetSummary from "@/components/asset/AssetSummary";
-import { mockPortfolio } from "@/data/assets";
+import { useAssetStore } from "@/store/assetStore";
 import styled from "styled-components";
+import { useEffect } from "react";
 
 const Assets = () => {
+  const { cash, totalAsset, stocks, fetchAssets } = useAssetStore();
+
+  useEffect(() => {
+    fetchAssets();
+  }, []);
+
+  const isLoading = stocks.length === 0 && totalAsset === 0 && cash === 0;
+
+  if (isLoading) return <div>로딩 중...</div>;
+
   return (
     <AssetsStyle>
-      <AssetSummary portfolio={mockPortfolio} />
+      <AssetSummary portfolio={{ cash, totalAsset, stocks }} />
       <div className="divider" />
-      <AssetList portfolio={mockPortfolio} />
+      <AssetList portfolio={{ cash, totalAsset, stocks }} />
     </AssetsStyle>
   );
 };
@@ -16,7 +27,7 @@ const Assets = () => {
 const AssetsStyle = styled.div`
   display: flex;
   flex-direction: column;
-  
+
   .divider {
     margin-bottom: 15px;
   }

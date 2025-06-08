@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getStocks } from "@/api/stock.api";
+import { stocks } from "@/api/stock.api";
 import { TStock } from "@/models/stock/stock";
 
 const StockListTable = () => {
@@ -10,7 +10,7 @@ const StockListTable = () => {
 
   useEffect(() => {
     const fetchStockList = async () => {
-      setStockList(await getStocks());
+      setStockList(await stocks());
     };
     fetchStockList();
   }, []);

@@ -5,7 +5,7 @@ import { StockAsset } from "../../types/asset.type";
  * 현재가 × 수량
  */
 export const calculateValuation = (stock: StockAsset): number => {
-  return stock.valuation * stock.quantity;
+  return stock.valuation;
 };
 
 /**
@@ -63,5 +63,3 @@ export const calculateTotalProfitRate = (stocks: StockAsset[]): number => {
   if (principal === 0) return 0;
   return (calculateTotalProfit(stocks) / principal) * 100;
 };
-
-

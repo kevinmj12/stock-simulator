@@ -9,11 +9,11 @@ export interface StockTradeProps {
   quantity: number;
 }
 
-export const getStocks = () => {
+export const stocks = () => {
   return requestHandler("get", "/stocks");
 };
 
-export const getStockDetail = (data: StockDetailProps) => {
+export const stockDetail = (data: StockDetailProps) => {
   return requestHandler("get", `/stocks/${data.id}`);
 };
 

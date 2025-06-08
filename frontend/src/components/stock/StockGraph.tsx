@@ -75,7 +75,7 @@ export const RenderLineChart: React.FC<RenderLineChartProps> = ({
     if (el) {
       el.scrollLeft = el.scrollWidth;
     }
-  }, [selectedChartType, data]);
+  }, [selectedChartType]);
 
   return (
     <div style={{ display: "flex", marginLeft: "-20px" }}>
@@ -118,7 +118,7 @@ export const RenderLineChart: React.FC<RenderLineChartProps> = ({
             dataKey="price"
             stroke="#8884d8"
             activeDot={{ r: 8 }}
-            animationDuration={1000}
+            // animationDuration={1000}
           />
         </LineChart>
       </div>

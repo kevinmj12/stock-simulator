@@ -1,17 +1,19 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import StockBuyingSelling from "@/components/stock/StockBuyingSelling";
+import StockBuyingSelling from "@/components/stock/StockTrade";
 import { useEffect, useState } from "react";
 import { RenderLineChart } from "@/components/stock/StockGraph";
 import { Segmented } from "antd";
 import { capitalizeFirstLetter } from "@/util/capitalize";
 import { IStockDetail } from "@/models/stock/stock-detail";
-import { getStockDetail, StockDetailProps } from "@/api/stock.api";
+import { StockDetailProps } from "@/api/stock.api";
 import { IPriceData } from "@/models/stock/stock-price";
 import { parseStockPrices } from "@/util/stock/parseStockData";
+import { useStock } from "@/hooks/useStock";
 
 const StockDetail: React.FC = () => {
   const { stockId } = useParams<{ stockId: string }>();
+  const { getStockDetail } = useStock();
   const stockIdNum = Number(stockId);
 
   const chartType: string[] = ["일", "실시간"];
@@ -28,12 +30,16 @@ const StockDetail: React.FC = () => {
         id: stockIdNum,
       };
       const stockDetail = await getStockDetail(stockDetailProps);
-      setStockDetail(stockDetail);
-      setStockPriceList(parseStockPrices(stockDetail));
-    };
 
+      if (stockDetail) {
+        setStockDetail(stockDetail);
+        setStockPriceList(parseStockPrices(stockDetail));
+      } else {
+        setStockDetail(null);
+      }
+    };
     fetchStockDetail();
-  }, []);
+  }, [getStockDetail, stockIdNum]);
 
   const getStockData = () => {
     if (selectedChartType === chartType[0]) {
@@ -85,7 +91,10 @@ const StockDetail: React.FC = () => {
         </div>
         <div className="trade">
           <div className="stock-subtitle">매매</div>
-          <StockBuyingSelling curPrice={stockDetail.current_price} />
+          <StockBuyingSelling
+            stockId={stockDetail.id}
+            curPrice={stockDetail.current_price}
+          />
         </div>
       </div>
     </StockStyle>

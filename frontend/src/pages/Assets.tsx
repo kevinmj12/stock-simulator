@@ -15,7 +15,6 @@ const Assets = () => {
 
   if (isLoading) return <div>로딩 중...</div>;
 
-
   return (
     <AssetsStyle>
       <AssetSummary portfolio={{ cash, totalAsset, stocks }} />

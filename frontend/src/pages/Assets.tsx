@@ -13,7 +13,7 @@ const Assets = () => {
 
   const isLoading = stocks.length === 0 && totalAsset === 0 && cash === 0;
 
-  if (isLoading) return <div>로딩 중...</div>;
+  if (isLoading) return <AssetsStyle>로딩 중...</AssetsStyle>;
 
   return (
     <AssetsStyle>

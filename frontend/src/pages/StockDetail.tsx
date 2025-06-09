@@ -105,7 +105,6 @@ const StockStyle = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-top: 30px;
 
   .stock-info-container {
     display: flex;

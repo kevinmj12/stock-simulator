@@ -34,7 +34,6 @@ export const useStock = () => {
       await selling(data);
       showAlert(`${data.quantity}주 판매에 성공했습니다.`);
     } catch (error) {
-      console.log(error);
       showAlert("주식 판매에 실패하였습니다.");
     }
   };

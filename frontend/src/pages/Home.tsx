@@ -10,8 +10,6 @@ const Home = () => {
 };
 
 const HomeStyle = styled.div`
-  padding: 24px;
-
   h1 {
     font-size: 28px;
     font-weight: bold;

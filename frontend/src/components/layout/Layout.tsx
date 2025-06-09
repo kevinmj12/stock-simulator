@@ -17,7 +17,11 @@ const Layout = ({ children }: LayoutProps) => {
 
 const LayoutStyle = styled.main`
   width: 100%;
-  padding: 40px;
+  padding: 24px 48px;
+
+  main {
+    padding: 0px 20px;
+  }
 `;
 
 export default Layout;

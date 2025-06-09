@@ -3,6 +3,7 @@ import { FaRegUser, FaSignInAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
 import { useAuth } from "@/hooks/useAuth";
+import logo from "@/assets/images/logo.png";
 
 const Header = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -13,8 +14,13 @@ const Header = () => {
       <nav className="navigation">
         <ul>
           <li>
-            <Link to="/">홈</Link>
+            <Link to="/">
+              <img src={logo} alt="logo" width="100px" />
+            </Link>
           </li>
+          {/* <li>
+            <Link to="/">홈</Link>
+          </li> */}
           <li>
             <Link to="/assets">보유 자산</Link>
           </li>
@@ -55,14 +61,14 @@ const HeaderStyle = styled.header`
   width: 100%;
   margin: 0 auto;
   display: flex;
-  align-items: start;
+  align-items: center;
   justify-content: space-between;
+  margin-bottom: 24px;
 
   .navigation {
-    margin: 0;
-    justify-self: center;
     ul {
       display: flex;
+      align-items: center;
       gap: 50px;
       li {
         a,
@@ -76,6 +82,8 @@ const HeaderStyle = styled.header`
     }
   }
   .auth {
+    display: flex;
+
     ul {
       justify-self: end;
       display: flex;

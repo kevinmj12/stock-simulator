@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { stocks } from "@/api/stock.api";
 import { TStock } from "@/models/stock/stock";
+import { getStockLogoUrl } from "@/util/stock/getStockLogo";
 
 const StockListTable = () => {
   const navigate = useNavigate();
@@ -37,7 +38,10 @@ const StockListTable = () => {
               }}
             >
               <td className="name-cell">
-                <img src={stock.logo_url} alt={stock.company_name} />
+                <img
+                  src={getStockLogoUrl(stock.symbol)}
+                  alt={stock.company_name}
+                />
                 <span>{stock.company_name}</span>
               </td>
               <td>${stock.current_price}</td>
@@ -88,10 +92,6 @@ const TableStyle = styled.table`
       padding: 12px;
       font-size: 20px;
       color: ${({ theme }) => theme.color.text};
-
-      img {
-        border-radius: 4px;
-      }
     }
 
     td:nth-child(2),

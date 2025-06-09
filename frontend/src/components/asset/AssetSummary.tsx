@@ -116,7 +116,7 @@ const AssetSummaryStyle = styled.div`
     display: flex;
     gap: 24px;
     margin-top: 30px;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .bottom-left {

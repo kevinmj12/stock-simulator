@@ -2,8 +2,17 @@ import styled from "styled-components";
 import { Button, Segmented } from "antd";
 import { useState } from "react";
 import { useTheme } from "styled-components";
+import { useStock } from "@/hooks/useStock";
+import { FaPlus, FaMinus } from "react-icons/fa6";
+import { StockTradeProps } from "@/api/stock.api";
 
-const StockBuyingSelling = () => {
+interface StockTradeDivProps {
+  stockId: number;
+  curPrice: string;
+}
+
+const StockTradeDiv = ({ stockId, curPrice }: StockTradeDivProps) => {
+  const { buyStock, sellStock } = useStock();
   const tradeType: string[] = ["매수", "매도"];
   const tradeButton: string[] = ["구매하기", "판매하기"];
   const [selected, setSelected] = useState<string>("매수");
@@ -24,7 +33,7 @@ const StockBuyingSelling = () => {
   const theme = useTheme();
 
   return (
-    <StockBuyingSellingStyle $selected={selected}>
+    <StockTradeDivStyle $selected={selected}>
       <Segmented<string>
         className="segmented"
         options={tradeType}
@@ -36,7 +45,7 @@ const StockBuyingSelling = () => {
       />
       <div className="price">
         <div className="trade-subtitle">구매 가격</div>
-        <div className="box">$60</div>
+        <div className="box">${curPrice}</div>
       </div>
       <div className="amount">
         <div className="trade-subtitle">수량</div>
@@ -57,8 +66,12 @@ const StockBuyingSelling = () => {
             />
           </div>
           <div className="amount-buttons">
-            <button onClick={() => minusStockAMount()}>－</button>
-            <button onClick={() => plusStockAmount()}>＋</button>
+            <button onClick={() => minusStockAMount()}>
+              <FaMinus />
+            </button>
+            <button onClick={() => plusStockAmount()}>
+              <FaPlus />
+            </button>
           </div>
         </div>
       </div>
@@ -70,14 +83,21 @@ const StockBuyingSelling = () => {
           backgroundColor:
             selected === "매수" ? theme.color.rise : theme.color.fall,
         }}
+        onClick={() => {
+          const props: StockTradeProps = {
+            stock_id: stockId,
+            quantity: stockAmount,
+          };
+          selected === "매수" ? buyStock(props) : sellStock(props);
+        }}
       >
         {selected === "매수" ? tradeButton[0] : tradeButton[1]}
       </Button>
-    </StockBuyingSellingStyle>
+    </StockTradeDivStyle>
   );
 };
 
-const StockBuyingSellingStyle = styled.div<{ $selected: string }>`
+const StockTradeDivStyle = styled.div<{ $selected: string }>`
   width: 270px;
   .segmented {
     margin-bottom: 20px;
@@ -133,7 +153,7 @@ const StockBuyingSellingStyle = styled.div<{ $selected: string }>`
           font-size: 14px;
           font-weight: 600;
           color: ${({ theme }) => theme.color.secondary};
-          padding: 2px 6px;
+          padding: 2px 3px;
           cursor: pointer;
 
           &:hover {
@@ -146,4 +166,4 @@ const StockBuyingSellingStyle = styled.div<{ $selected: string }>`
   }
 `;
 
-export default StockBuyingSelling;
+export default StockTradeDiv;

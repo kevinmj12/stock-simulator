@@ -1,4 +1,4 @@
-import { PriceData } from "@/util/stock/parseStockData";
+import { IPriceData } from "@/models/stock/stock-price";
 import React, { useEffect, useRef } from "react";
 import {
   LineChart,
@@ -24,24 +24,27 @@ const createMonthTickFormatter = (): ((tick: string) => string) => {
 };
 
 const createDayTickFormatter = (): ((tick: string) => string) => {
+  let lastMonth: number | null = null;
   let lastDay: number | null = null;
   return (tick: string) => {
     const date = new Date(tick);
-    let month = (date.getMonth() + 1).toString();
-    if (month.length === 1) {
-      month = "0" + month;
+    let month = date.getMonth() + 1;
+    let day = date.getDate(); // 1 ~ 31
+
+    if (month !== lastMonth) {
+      lastMonth = month;
+      return `${month}월`;
     }
-    const day = date.getDate(); // 1 ~ 31
     if (day !== lastDay) {
       lastDay = day;
-      return `${month}-${day}`;
+      return `${day}일`;
     }
     return "";
   };
 };
 
 type RenderLineChartProps = {
-  data: PriceData[];
+  data: IPriceData[];
   selectedChartType: String;
 };
 
@@ -91,10 +94,11 @@ export const RenderLineChart: React.FC<RenderLineChartProps> = ({
       {/* x축과 스크롤 가능한 그래프 렌더링*/}
       <div
         ref={scrollContainerRef}
-        style={{ overflowX: "auto", width: "600px" }}
+        style={{ overflowX: "auto", width: "550px" }}
       >
         <LineChart
-          width={Math.max(data.length * 30)}
+          key={`${selectedChartType}`}
+          width={Math.max(data.length * 30, 550)}
           height={300}
           data={data}
           margin={{ top: 0, right: 10, bottom: 5, left: 20 }}
@@ -108,13 +112,13 @@ export const RenderLineChart: React.FC<RenderLineChartProps> = ({
             // axisLine={false}
           />
           <Tooltip />
-          <YAxis domain={domain} width={-5} />
+          <YAxis domain={domain} hide={true} />
           <Line
             type="monotone"
             dataKey="price"
             stroke="#8884d8"
             activeDot={{ r: 8 }}
-            animationDuration={1000}
+            // animationDuration={1000}
           />
         </LineChart>
       </div>

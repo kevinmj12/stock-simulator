@@ -2,8 +2,8 @@ export const getStockLogoUrl = (symbol: string): string => {
   const map: Record<string, string> = {
     TSLA: "Tesla.png",
     AAPL: "Apple.png",
-    GOOGL: "Google.png",
-    META: "Meta.png",
+    DIS: "Disney.png",
+    NFLX: "Netflix.png",
     NVDA: "Nvidia.png",
   };
 

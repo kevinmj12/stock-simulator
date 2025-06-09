@@ -31,8 +31,10 @@ const AssetSummary: React.FC<AssetSummaryProps> = ({ portfolio }) => {
 
   return (
     <AssetSummaryStyle>
-      <p className="title">내 투자</p>
-      <h3>{formatCurrency(totalAsset)}</h3>
+      <div>
+        <p className="title">내 투자</p>
+        <h3>{formatCurrency(totalAsset)}</h3>
+      </div>
       <div className="row">
         <div className="block">
           <span className="label">원금</span>
@@ -48,12 +50,13 @@ const AssetSummary: React.FC<AssetSummaryProps> = ({ portfolio }) => {
       </div>
       <div className="bottom">
         <div className="bottom-left">
+          <span className="label">해외주식</span>
           <span>{formatCurrency(totalValuation)}</span>
         </div>
-        <div className={`bottom-right ${profitClass}`}>
+        {/* <div className={`bottom-right ${profitClass}`}>
           <span>{formatSignedCurrency(totalProfit)}</span>
           <span>({formatPercent(totalProfitRate)})</span>
-        </div>
+        </div> */}
       </div>
     </AssetSummaryStyle>
   );
@@ -66,6 +69,7 @@ const AssetSummaryStyle = styled.div`
   margin-top: 8px;
   font-size: 14px;
   color: ${({ theme }) => theme.color.text};
+  gap: 12px;
 
   .title {
     margin: 0;
@@ -110,15 +114,16 @@ const AssetSummaryStyle = styled.div`
 
   .bottom {
     display: flex;
-    gap: 8px;
-    margin-top: 12px;
-    padding: 0 4px;
+    gap: 24px;
+    margin-top: 30px;
     font-size: 14px;
   }
 
   .bottom-left {
+    display: flex;
     color: #333d4b;
     font-weight: bold;
+    gap: 8px;
   }
 
   .bottom-right {

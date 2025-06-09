@@ -72,7 +72,7 @@ const AssetList: React.FC<AssetListProps> = ({ portfolio }) => {
                   {formatSignedCurrency(stock.profit)}
                 </td>
                 <td>{formatCurrency(stock.average_price)}</td>
-                <td>{formatCurrency(stock.valuation)}</td>
+                <td>{formatCurrency(stock.current_price)}</td>
                 <td>{stock.quantity}주</td>
                 <td>{formatCurrency(valuation)}</td>
                 <td>{formatCurrency(principal)}</td>

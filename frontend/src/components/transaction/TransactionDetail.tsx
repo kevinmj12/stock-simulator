@@ -1,31 +1,37 @@
 import styled from "styled-components";
 import { useTransactionStore } from "../../store/transactionStore";
-import { mockTransactions } from "../../data/transactions";
 import { format } from "date-fns";
+import { getStockLogoUrl } from "@/util/stock/getStockLogo";
 
 const TransactionDetail = () => {
-  const { selectedTransactionId } = useTransactionStore();
-  const transaction = mockTransactions.find(
-    (tx) => tx.id === selectedTransactionId
-  );
+  const { selectedTransactionId, transactions } = useTransactionStore();
+  const transaction = transactions.find((t) => t.id === selectedTransactionId);
 
-  if (!transaction) return <DetailStyle>거래를 선택해주세요.</DetailStyle>;
+  if (transactions.length === 0) {
+    return <DetailStyle>불러오는 중...</DetailStyle>;
+  }
+
+  if (!transaction) {
+    return <DetailStyle>거래를 선택해주세요.</DetailStyle>;
+  }
 
   const isBuy = transaction.type === "buy";
-  const dateObj = new Date(transaction.date);
-  const signedPrice = `${
-    isBuy ? "-" : "+"
-  }$${transaction.totalPrice.toLocaleString()}`;
+  const dateObj = new Date(transaction.created_at);
+  const totalPrice = transaction.total_price;
+  const signedPrice = `${isBuy ? "-" : "+"}$${totalPrice.toLocaleString()}`;
 
   return (
     <DetailStyle>
       <div className="header">
         <div className="left">
-          <p>{transaction.stockName}</p>
+          <p>{transaction.symbol}</p>
           <h3>{signedPrice}</h3>
         </div>
         <div className="right">
-          <img src={transaction.logoUrl} alt={transaction.stockName} />
+          <img
+            src={getStockLogoUrl(transaction.symbol)}
+            alt={transaction.symbol}
+          />
         </div>
       </div>
 
@@ -44,9 +50,7 @@ const TransactionDetail = () => {
         </div>
         <div className="row">
           <span className="label">총 구매금액</span>
-          <span className="value">
-            ${transaction.totalPrice.toLocaleString()}
-          </span>
+          <span className="value">${totalPrice.toLocaleString()}</span>
         </div>
       </div>
     </DetailStyle>

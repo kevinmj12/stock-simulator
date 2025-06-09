@@ -1,12 +1,9 @@
-export type TransactionType = "buy" | "sell";
-
 export interface Transaction {
   id: number;
-  stockName: string;
-  stockSymbol: string;
-  logoUrl: string;
-  type: TransactionType;
+  type: "buy" | "sell";
   quantity: number;
-  totalPrice: number;
-  date: string;
+  total_price: number;
+  symbol: string;
+  company_name: string;
+  created_at: string;
 }

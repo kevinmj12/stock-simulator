@@ -1,36 +1,53 @@
 import styled from "styled-components";
-import { mockTransactions } from "../../data/transactions";
-import { format } from "date-fns";
+import { format, isValid } from "date-fns";
 import { useTransactionStore } from "../../store/transactionStore";
+import { useEffect } from "react";
+import { useAssetStore } from "@/store/assetStore";
 
 const TransactionList = () => {
-  const { selectTransaction, selectedTransactionId } = useTransactionStore();
+  const {
+    transactions,
+    fetchTransactions,
+    selectedTransactionId,
+    selectTransaction,
+  } = useTransactionStore();
+
+  const { cash, fetchAssets } = useAssetStore();
+
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
+
+  useEffect(() => {
+    fetchAssets();
+  }, []);
 
   return (
     <TransactionListStyle>
-      {mockTransactions
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      {transactions
+        .sort(
+          (a, b) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        )
         .map((tx) => {
-          const dateObj = new Date(tx.date);
+          const dateObj = new Date(tx.created_at);
+          if (!isValid(dateObj)) return null;
+
           const date = format(dateObj, "M.d");
           const time = format(dateObj, "HH:mm");
           const isBuy = tx.type === "buy";
           const signedPrice = `${
             isBuy ? "-" : "+"
-          }$${tx.totalPrice.toLocaleString()}`;
-          const stockCount = tx.quantity;
-          const balance = isBuy ? "$8,732.54" : "$10,152.34"; // 실제 구현 시 상태로 관리
+          }$${tx.total_price.toLocaleString()}`;
 
           return (
             <li
               key={tx.id}
-              onClick={() => {
-                if (selectedTransactionId === tx.id) {
-                  selectTransaction(null);
-                } else {
-                  selectTransaction(tx.id);
-                }
-              }}
+              onClick={() =>
+                selectedTransactionId === tx.id
+                  ? selectTransaction(null)
+                  : selectTransaction(tx.id)
+              }
               className={selectedTransactionId === tx.id ? "active" : ""}
             >
               <div className="row">
@@ -38,7 +55,7 @@ const TransactionList = () => {
                   <div className="top">
                     <span className="date">{date}</span>
                     <span className="stock">
-                      {tx.stockName} {stockCount}주
+                      {tx.symbol} {tx.quantity}주
                     </span>
                   </div>
                   <div className="bottom">
@@ -51,7 +68,7 @@ const TransactionList = () => {
                   <span className={`price ${isBuy ? "buy" : "sell"}`}>
                     {signedPrice}
                   </span>
-                  <span className="balance">{balance}</span>
+                  <span className="balance">${cash.toLocaleString()}</span>
                 </div>
               </div>
             </li>

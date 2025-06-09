@@ -6,4 +6,5 @@ export interface Transaction {
   symbol: string;
   company_name: string;
   created_at: string;
+  cash_after: number;
 }

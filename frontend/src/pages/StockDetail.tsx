@@ -10,6 +10,7 @@ import { StockDetailProps } from "@/api/stock.api";
 import { IPriceData } from "@/models/stock/stock-price";
 import { parseStockPrices } from "@/util/stock/parseStockData";
 import { useStock } from "@/hooks/useStock";
+import { getStockLogoUrl } from "@/util/stock/getStockLogo";
 
 const StockDetail: React.FC = () => {
   const { stockId } = useParams<{ stockId: string }>();
@@ -58,11 +59,11 @@ const StockDetail: React.FC = () => {
       <div className="stock-info-container">
         <img
           className="stock-info-image"
-          src={stockDetail.logo_url}
+          src={getStockLogoUrl(stockDetail.symbol)}
           alt={stockDetail.company_name}
           width="60px"
           height="60px"
-        ></img>
+        />
         <div className="stock-info-name-price">
           <div className="stock-info-name">
             <span>{capitalizeFirstLetter(stockDetail.company_name)}</span>
@@ -111,9 +112,7 @@ const StockStyle = styled.div`
     align-items: center;
     margin-bottom: 20px;
     gap: 15px;
-    .stock-info-image {
-      border-radius: 10px;
-    }
+
     .stock-info-name-price {
       display: flex;
       flex-direction: column;

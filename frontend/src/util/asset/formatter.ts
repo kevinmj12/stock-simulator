@@ -15,7 +15,8 @@ export const formatCurrency = (value: number): string => {
  * 소수점 자릿수는 기본 2자리
  */
 export const formatPercent = (value: number, digits = 2): string => {
-  return `${value.toFixed(digits)}%`;
+  const sign = value > 0 ? "+" : value < 0 ? "-" : "";
+  return `${sign}${Math.abs(value).toFixed(digits)}%`;
 };
 
 /**

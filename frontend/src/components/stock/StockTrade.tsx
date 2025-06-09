@@ -23,7 +23,7 @@ const StockTradeDiv = ({ stockId, curPrice }: StockTradeDivProps) => {
   };
 
   const minusStockAMount = () => {
-    if (stockAmount === 1 || stockAmount === null) {
+    if (stockAmount <= 1 || stockAmount === null) {
       return;
     } else {
       setStockAmount(stockAmount - 1);

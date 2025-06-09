@@ -12,14 +12,8 @@ const TransactionList = () => {
     selectTransaction,
   } = useTransactionStore();
 
-  const { cash, fetchAssets } = useAssetStore();
-
   useEffect(() => {
     fetchTransactions();
-  }, []);
-
-  useEffect(() => {
-    fetchAssets();
   }, []);
 
   return (
@@ -68,7 +62,9 @@ const TransactionList = () => {
                   <span className={`price ${isBuy ? "buy" : "sell"}`}>
                     {signedPrice}
                   </span>
-                  <span className="balance">${cash.toLocaleString()}</span>
+                  <span className="balance">
+                    ${tx.cash_after.toLocaleString()}
+                  </span>
                 </div>
               </div>
             </li>

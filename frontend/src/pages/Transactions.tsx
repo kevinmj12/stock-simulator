@@ -5,7 +5,7 @@ import { useTransactionStore } from "../store/transactionStore";
 
 const Transactions = () => {
   const { selectedTransactionId } = useTransactionStore();
-  const showDetail = Boolean(selectedTransactionId);
+  const showDetail = selectedTransactionId !== null;
 
   return (
     <TransactionsStyle>
@@ -14,7 +14,6 @@ const Transactions = () => {
       </LeftSection>
 
       {showDetail && <div className="divider" />}
-
       {showDetail && (
         <RightSection>
           <TransactionDetail />

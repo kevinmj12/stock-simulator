@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 const stockRoutes = require("./routes/stocks");
@@ -5,9 +7,8 @@ const transactionRoutes = require("./routes/transactions");
 const assetRoutes = require("./routes/assets");
 const userRoutes = require("./routes/users");
 
-require("./cron/priceUpdater"); // 6시간마다 가격 갱신
+require("./cron/priceUpdater");
 require("./cron/dailyUpdater");
-require("dotenv").config();
 
 app.use(express.json());
 app.use("/stocks", stockRoutes);

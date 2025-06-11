@@ -41,6 +41,7 @@ exports.getMyAssets = async (req, res) => {
         symbol: h.symbol,
         quantity: h.quantity,
         average_price: h.average_price,
+        current_price: parseFloat(h.current_price.toFixed(2)),
         valuation: parseFloat(valuation.toFixed(2)),
         profit: parseFloat(profit.toFixed(2)),
       };
@@ -49,7 +50,7 @@ exports.getMyAssets = async (req, res) => {
     res.status(200).json({
       cash,
       totalAsset: Math.round(cash + totalValuation),
-      ...(enrichedHoldings[0] || {}), // 첫 종목만 반환 (명세에 따라)
+      stocks: enrichedHoldings,
     });
   } catch (err) {
     console.error(err);

@@ -11,7 +11,7 @@ const fetchPrice = async (symbol) => {
 };
 
 // 한국 시간 기준 밤 11시, 1시, 3시, 5시에 실행
-cron.schedule("0 23,1,3,5 * * *", async () => {
+cron.schedule("0 14,16,18,20 * * *", async () => {
   console.log("Fetching stock prices... (한국 시간 기준)");
   const [stocks] = await db.query("SELECT id, symbol FROM stocks");
 
@@ -24,11 +24,8 @@ cron.schedule("0 23,1,3,5 * * *", async () => {
 
       await db.query(
         `
-          INSERT INTO stock_prices (stock_id, price, fetched_at)
-          VALUES (?, ?, ?)
-          ON DUPLICATE KEY UPDATE
-            price = VALUES(price),
-            fetched_at = VALUES(fetched_at)
+        INSERT INTO stock_prices (stock_id, price, fetched_at)
+        VALUES (?, ?, ?)
         `,
         [stock.id, price, nowInSeoul]
       );

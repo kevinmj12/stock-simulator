@@ -11,7 +11,7 @@ const fetchDailyPrices = async (symbol) => {
   return res.data["Time Series (Daily)"];
 };
 
-cron.schedule("0 9 * * *", async () => {
+cron.schedule("0 0 * * *", async () => {
   // 매일 9:00 (KST) 실행
   console.log("Fetching daily prices... (KST 9:00)");
 
